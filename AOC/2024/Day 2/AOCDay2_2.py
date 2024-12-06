@@ -1,4 +1,4 @@
-#Day 2 Red-Nose Reports
+#Day 2-2 Red-Nose Reports
 #check the puzzles safety by determining if a report's levels increment or reduce by a "safe" amount
 '''
 must only increase level or decrease level per report but not both
@@ -18,39 +18,52 @@ safe reports = 2
 isIncreasing = False
 safecount = 0
 
+
+
 #take input and determine if asc/desc
-with open("day2.txt") as file:
+with open("test1.txt") as file:
     for reports in file.readlines():
         #reports is string
         report = list(map(int,reports.split()))
         #report is list
         print(f"report {report}")
         prev_level = report[0]
+        
 
         
         if report[1] > prev_level:
             isIncreasing = True
         else:
             isIncreasing = False
-    
+        
+        lives = 1
         for level in report[1:]:
-            print(f"level {level}, prev_level {prev_level}")
+            print(f"level: {level} prev_level: {prev_level} lives:{lives}")
 
             if isIncreasing == False and level > prev_level or isIncreasing == True and level < prev_level: #if the report isnt increasing or drecreasing go next
-                print("break")
-                break
-                
+                print(f"break, lives: {lives}")
+                if lives == 0:
+                    break
+            
+            
             if abs(level - prev_level) >3 or abs(level - prev_level) == 0 : #check if increment is in parameters
-                print("distance break")
-                break
-        
+                print(f"distance break, Lives: {lives}")
+                if lives == 0:
+                    break
+                    
+            lives -= 1
             prev_level = level
         else :
             safecount += 1
+    
 
 print(f"safecount: {safecount}")
 
 
+
+#pt2
+#introduce dampener(lives) if report fails more than once deem unsafe
+#
 
 
 #check if whole report follows ascending or descending 
